@@ -17,7 +17,9 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
 
-    const pathname = window.location.pathname;
+    const prefixPath = '/p2p.chat';
+    const pathname = window.location.pathname.replace(prefixPath, '');
+    console.log(`pathname: ${pathname}`);
 
     // We are rewriting all routes through to the index, but we can grab the
     // intended route from the URL.

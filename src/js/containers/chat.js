@@ -41,11 +41,22 @@ export default class Chat extends React.Component {
     }
 
     window.addEventListener('resize', this.forceUpdate.bind(this, () => {}))
+    window.addEventListener('load', this.init.bind(this, () => {}))
 
   }
 
-  async handleRequestPerms() {
+  init(){
+    // Auto initialize and  create nickname
+    if (!this.state.initialized){
+      this.handleRequestPerms()
+    }
+    if (!this.state.nickname){
+      this.fakeNickName()
+    }
+    console.log("Auto initializing");
+  }
 
+  async handleRequestPerms() {
     const {myStream, audioEnabled, videoEnabled} = await getMyStream()
     console.log({audioEnabled, videoEnabled})
     this.setState({initialized: true, myStream, audioEnabled, videoEnabled})
@@ -263,6 +274,23 @@ export default class Chat extends React.Component {
 
     window.location = `${window.location.origin}/goodbye`
 
+  }
+
+  fakeNickName(){
+    // Auto initialize and set nickname
+    const heroNames = [
+      "Iron Man", 
+      "Captain America", 
+      "Thor", 
+      "Black Widow",
+      "Hawkeye", 
+      "‎Iron Man", 
+      "‎Captain America", 
+      "‎Hulk"
+    ]
+    const randomIndex = Math.floor(Math.random() * heroNames.length);
+    const nickname = heroNames[randomIndex];
+    this.handleSetNickname(nickname);
   }
 
   render() {
