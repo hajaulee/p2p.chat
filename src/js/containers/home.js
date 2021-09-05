@@ -18,9 +18,14 @@ export default class Home extends React.Component {
     super(props);
 
     const prefixPath = '/p2p.chat';
-    const pathname = window.location.pathname.replace(prefixPath, '');
-    console.log(`pathname: ${pathname}`);
+    let pathname = window.location.pathname.replace(prefixPath, '');
 
+    const queryParams = queryString.parse(window.location.search);
+    if (queryParams.pathname){
+      pathname = queryParams.pathname
+    }
+
+    console.log(`pathname: ${pathname}`);
     // We are rewriting all routes through to the index, but we can grab the
     // intended route from the URL.
 
@@ -29,14 +34,13 @@ export default class Home extends React.Component {
       const roomCode = pathname.slice(1);
 
       // If we created the room ourselves, there'll be a ?created=true
-      const queryParams = queryString.parse(window.location.search);
       const created = queryParams.created;
 
       // Clean params from URL
       window.history.replaceState(
         null,
         null,
-        `${window.location.origin}${pathname}`
+        `${window.location.origin}?pathname=${pathname}`
       );
 
       this.state = {
@@ -70,7 +74,7 @@ export default class Home extends React.Component {
   handleCreateRoom(roomCode) {
     // As we have no router, just do a full navigate - we'll pick up the room
     // from the url on load.
-    window.location = `${window.location.origin}/${roomCode}?created=true`;
+    window.location = `${window.location.origin}?created=true&pathname=/${roomCode}`;
   }
 
   renderHome() {

@@ -272,7 +272,7 @@ export default class Chat extends React.Component {
 
   handleHangUp() {
 
-    window.location = `${window.location.origin}/goodbye`
+    window.location = `${window.location.origin}?pathname=/goodbye`
 
   }
 
