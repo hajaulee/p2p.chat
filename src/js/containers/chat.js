@@ -339,11 +339,11 @@ export default class Chat extends React.Component {
             />
           ) : null
         }
-        {
+        {/* {
           initialized && nickname ? (
             <Header roomName={roomName} />
           ) : null
-        }
+        } */}
         {
           initialized && nickname ? (
             <PeerStreams
