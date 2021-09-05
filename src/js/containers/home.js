@@ -13,11 +13,12 @@ import Terms from "../components/terms";
 import Privacy from "../components/privacy";
 import NotFound from "../components/not-found";
 
+export const prefixPath = '/p2p.chat';
+
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
 
-    const prefixPath = '/p2p.chat';
     let pathname = window.location.pathname.replace(prefixPath, '');
 
     const queryParams = queryString.parse(window.location.search);
@@ -40,7 +41,7 @@ export default class Home extends React.Component {
       window.history.replaceState(
         null,
         null,
-        `${window.location.origin}?pathname=${pathname}`
+        `${window.location.origin}${prefixPath}/?pathname=${pathname}`
       );
 
       this.state = {
@@ -74,7 +75,7 @@ export default class Home extends React.Component {
   handleCreateRoom(roomCode) {
     // As we have no router, just do a full navigate - we'll pick up the room
     // from the url on load.
-    window.location = `${window.location.origin}?created=true&pathname=/${roomCode}`;
+    window.location = `${window.location.origin}${prefixPath}/?created=true&pathname=/${roomCode}`;
   }
 
   renderHome() {

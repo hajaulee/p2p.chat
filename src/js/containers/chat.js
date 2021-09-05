@@ -10,6 +10,7 @@ import PeerStreams from '../components/peer-streams'
 import InvalidRoom from '../components/invalid-room'
 import RequestPerms from '../components/request-perms'
 import SetNickname from '../components/set-nickname'
+import { prefixPath } from './home'
 
 const SIGNALHUB = 'https://signalhub.p2p.chat'
 
@@ -272,7 +273,7 @@ export default class Chat extends React.Component {
 
   handleHangUp() {
 
-    window.location = `${window.location.origin}?pathname=/goodbye`
+    window.location = `${window.location.origin}${prefixPath}/?pathname=/goodbye`
 
   }
 
