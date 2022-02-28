@@ -11,6 +11,7 @@ import InvalidRoom from '../components/invalid-room'
 import RequestPerms from '../components/request-perms'
 import SetNickname from '../components/set-nickname'
 import { prefixPath } from './home'
+import { custom_signalhub } from '../lib/custom-signalhub'
 
 const SIGNALHUB = 'https://signalhub.p2p.chat'
 
@@ -79,7 +80,8 @@ export default class Chat extends React.Component {
     const {myUuid, myStream} = this.state
     const {roomCode} = this.props
 
-    const hub = signalhub(roomCode, [SIGNALHUB])
+    // const hub = signalhub(roomCode, [SIGNALHUB])
+    const hub = new custom_signalhub(roomCode);
 
     hub.subscribe('all').on('data', this.handleHubData.bind(this))
 
@@ -101,7 +103,7 @@ export default class Chat extends React.Component {
 
     // Send initial connect signal
     hub.broadcast(
-      roomCode,
+      "all",
       {
         type: 'connect',
         from: myUuid,
